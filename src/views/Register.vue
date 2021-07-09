@@ -11,18 +11,18 @@
     <div class="register-form">
       <form action="" novalidate>
         <label for="Name">What's your name?</label>
-        <DefaultInput type="text" name="firstName" placeholder="First" />
-        <DefaultInput type="email" name="email" placeholder="Email" />
+        <Input type="text" name="firstName" placeholder="First" />
+        <Input type="text" name="lastName" placeholder="Last" />
         <label for="Username">Pick a username</label>
-        <DefaultInput
+        <Input
           type="text"
           name="userName"
           placeholder="What should everyone call you?"
         />
         <label for="Account">Account</label>
-        <DefaultInput type="email" name="email" placeholder="Email" />
-        <DefaultInput type="password" name="password" placeholder="Password" />
-        <DefaultButton
+        <Input type="email" name="email" placeholder="Email" />
+        <Input type="password" name="password" placeholder="Password" />
+        <Button
           :disabled="true"
           title="Create an account"
           variant="secondary"
@@ -33,12 +33,12 @@
 </template>
 
 <script>
-import DefaultInput from "@/components/DefaultInput.vue";
-import DefaultButton from "@/components/DefaultButton.vue";
+import Input from "@/components/Input.vue";
+import Button from "@/components/Button.vue";
 export default {
   components: {
-    DefaultInput,
-    DefaultButton,
+    Input,
+    Button,
   },
 };
 </script>

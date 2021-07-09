@@ -11,20 +11,20 @@
     </div>
     <div class="login-form">
       <form action="" novalidate>
-        <DefaultInput type="email" name="email" placeholder="Email" />
-        <DefaultInput type="password" name="password" placeholder="Password" />
-        <DefaultButton title="Login" variant="secondary" />
+        <Input type="email" name="email" placeholder="Email" />
+        <Input type="password" name="password" placeholder="Password" />
+        <Button title="Login" variant="secondary" />
       </form>
     </div>
   </div>
 </template>
 <script>
-import DefaultInput from "@/components/DefaultInput.vue";
-import DefaultButton from "@/components/DefaultButton.vue";
+import Input from "@/components/Input.vue";
+import Button from "@/components/Button.vue";
 export default {
   components: {
-    DefaultInput,
-    DefaultButton,
+    Input,
+    Button,
   },
 };
 </script>
