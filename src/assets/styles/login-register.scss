@@ -2,12 +2,13 @@
   margin-top: 245px;
 }
 
-#login {
+#login,
+#register {
   margin-top: 30px;
 
-  .welcome-txt {
+  .title {
     margin-top: 150px;
-
+    margin-bottom: 50px;
     span {
       color: rgb(153, 153, 153);
       font-size: 14px;
@@ -15,7 +16,19 @@
     }
   }
 
-  .login-form {
+  .login-form,
+  .register-form {
+    width: 100%;
+    max-width: 327px;
     margin-top: 62px;
+    margin: 0 auto;
+    label {
+      font-weight: bold;
+      font-size: 14px;
+      color: #c7c7c7;
+      text-align: left;
+      display: block;
+      margin-bottom: 10px;
+    }
   }
 }

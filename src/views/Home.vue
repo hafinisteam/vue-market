@@ -5,7 +5,9 @@
       <router-link to="/login">
         <DefaultButton class="login" title="Login" variant="primary" />
       </router-link>
-      <DefaultButton class="register" title="Sign up" variant="secondary" />
+      <router-link to="/register">
+        <DefaultButton class="register" title="Sign up" variant="secondary" />
+      </router-link>
     </div>
   </div>
 </template>

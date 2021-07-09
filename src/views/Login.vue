@@ -5,7 +5,7 @@
         <img src="../assets/bazaar_logo.svg" alt="" />
       </router-link>
     </div>
-    <div class="welcome-txt">
+    <div class="title">
       <h5>Welcome back</h5>
       <span class="d-block">Login with your email</span>
     </div>

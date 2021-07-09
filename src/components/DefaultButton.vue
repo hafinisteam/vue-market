@@ -1,6 +1,8 @@
 <template>
   <div>
-    <b-button class="btn-default" :variant="variant">{{ title }}</b-button>
+    <b-button class="btn-default" :variant="variant" :disabled="disabled">{{
+      title
+    }}</b-button>
   </div>
 </template>
 
@@ -12,6 +14,9 @@ export default {
     },
     variant: {
       type: String,
+    },
+    disabled: {
+      type: Boolean,
     },
   },
 };
