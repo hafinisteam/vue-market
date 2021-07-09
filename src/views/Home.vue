@@ -1,18 +1,29 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <img alt="Vue logo" src="../assets/logo_welcome.svg" />
+    <div class="login-register">
+      <router-link to="/login">
+        <DefaultButton class="login" title="Login" variant="primary" />
+      </router-link>
+      <DefaultButton class="register" title="Sign up" variant="secondary" />
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
+import DefaultButton from "@/components/DefaultButton.vue";
 export default {
   name: "Home",
   components: {
-    HelloWorld,
+    DefaultButton,
   },
 };
 </script>
+<style lang="scss">
+.home {
+  padding: 90px 24px 60px;
+  max-width: 526px;
+  margin: 0px auto;
+}
+</style>
