@@ -10,7 +10,8 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 import PortalVue from "portal-vue";
 Vue.use(PortalVue);
-
+import Vuelidate from "vuelidate";
+Vue.use(Vuelidate);
 Vue.config.productionTip = false;
 
 new Vue({

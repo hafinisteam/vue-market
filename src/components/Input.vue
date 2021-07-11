@@ -4,6 +4,7 @@
       class="default-input"
       :type="type"
       :name="name"
+      :value="value"
       :placeholder="placeholder"
     ></b-form-input>
   </div>
@@ -19,6 +20,9 @@ export default {
       type: String,
     },
     placeholder: {
+      type: String,
+    },
+    value: {
       type: String,
     },
   },

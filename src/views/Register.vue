@@ -9,10 +9,18 @@
       <h5>Register</h5>
     </div>
     <div class="register-form">
-      <form action="" novalidate>
+      <form v-if="isStep1 == true" action="" novalidate>
         <label for="Name">What's your name?</label>
         <Input type="text" name="firstName" placeholder="First" />
         <Input type="text" name="lastName" placeholder="Last" />
+        <Button
+          v-on:click="toNextStep"
+          :disabled="true"
+          title="Next"
+          variant="secondary"
+        />
+      </form>
+      <form v-if="isStep1 == false" action="" novalidate>
         <label for="Username">Pick a username</label>
         <Input
           type="text"
@@ -36,9 +44,20 @@
 import Input from "@/components/Input.vue";
 import Button from "@/components/Button.vue";
 export default {
+  data() {
+    return {
+      isStep1: true,
+      isStep2: false,
+    };
+  },
   components: {
     Input,
     Button,
+  },
+  methods: {
+    toNextStep: function () {
+      return (this.isStep1 = false);
+    },
   },
 };
 </script>
