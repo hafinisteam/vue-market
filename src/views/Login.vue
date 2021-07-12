@@ -12,24 +12,12 @@
     <div class="login-form">
       <form action="" novalidate>
         <Input type="email" name="email" placeholder="Email" v-model="email" />
-        <!-- <b-form-input
-          id="email"
-          type="email"
-          placeholder="Email"
-          v-model.trim="$v.email.$model"
-        ></b-form-input> -->
         <Input
           type="password"
           name="password"
           placeholder="Password"
           v-model="password"
         />
-        <!-- <b-form-input
-          id="password"
-          type="password"
-          placeholder="password"
-          v-model.trim="$v.password.$model"
-        ></b-form-input> -->
         <Button :disabled="$v.$invalid" title="Login" variant="secondary" />
       </form>
     </div>
