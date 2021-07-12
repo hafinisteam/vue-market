@@ -6,11 +6,13 @@ import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import "./assets/styles/main.scss";
+import PortalVue from "portal-vue";
+import Vuelidate from "vuelidate";
+
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
-import PortalVue from "portal-vue";
 Vue.use(PortalVue);
-
+Vue.use(Vuelidate);
 Vue.config.productionTip = false;
 
 new Vue({

@@ -9,10 +9,13 @@
       <h5>Register</h5>
     </div>
     <div class="register-form">
-      <form action="" novalidate>
+      <form v-if="isStep1 == true" action="" novalidate>
         <label for="Name">What's your name?</label>
         <Input type="text" name="firstName" placeholder="First" />
         <Input type="text" name="lastName" placeholder="Last" />
+        <Button @click="isStep1 = false" title="Next" variant="secondary" />
+      </form>
+      <form v-if="isStep1 == false" action="" novalidate>
         <label for="Username">Pick a username</label>
         <Input
           type="text"
@@ -36,6 +39,17 @@
 import Input from "@/components/Input.vue";
 import Button from "@/components/Button.vue";
 export default {
+  data() {
+    return {
+      isStep1: true,
+      email: "",
+      password: "",
+      confirmPassword: "",
+      firstName: "",
+      lastName: "",
+      username: "",
+    };
+  },
   components: {
     Input,
     Button,
