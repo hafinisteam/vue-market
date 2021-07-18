@@ -1,8 +1,12 @@
 <template>
   <div>
-    <b-button class="btn-default" :variant="variant" :disabled="disabled">{{
-      title
-    }}</b-button>
+    <b-button
+      class="btn-default"
+      :variant="variant"
+      @click="handleClick"
+      :disabled="disabled"
+      >{{ title }}</b-button
+    >
   </div>
 </template>
 
@@ -17,6 +21,11 @@ export default {
     },
     disabled: {
       type: Boolean,
+    },
+  },
+  methods: {
+    handleClick() {
+      this.$emit("onclick");
     },
   },
 };

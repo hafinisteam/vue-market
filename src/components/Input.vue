@@ -4,14 +4,19 @@
       class="default-input"
       :type="type"
       :name="name"
-      :value="value"
       :placeholder="placeholder"
+      v-model="content"
     ></b-form-input>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      content: this.value,
+    };
+  },
   props: {
     type: {
       type: String,
@@ -24,6 +29,11 @@ export default {
     },
     value: {
       type: String,
+    },
+  },
+  watch: {
+    content() {
+      this.$emit("input", this.content);
     },
   },
 };
