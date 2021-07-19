@@ -70,8 +70,6 @@ export default {
       firstName: "",
       lastName: "",
       username: "",
-      country: "",
-      phoneNumber: "",
     };
   },
   validations: {
@@ -115,8 +113,7 @@ export default {
       let firstName = this.firstName;
       let lastName = this.lastName;
       let username = this.username;
-      let country = this.country;
-      let phoneNumber = this.phoneNumber;
+      const that = this;
       axios
         .post(`${BASE_URL}/signup`, {
           email,
@@ -124,13 +121,12 @@ export default {
           confirmPassword,
           firstName,
           lastName,
-          country,
-          phoneNumber,
+          country: "",
+          phoneNumber: "",
           username,
         })
-        .then(function (response) {
-          console.log(response);
-          this.$router.push("welcome");
+        .then(function () {
+          that.$router.push({ path: "/listing" });
         })
         .catch(function (error) {
           console.log(error);

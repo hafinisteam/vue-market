@@ -35,6 +35,7 @@ import { validationMixin } from "vuelidate";
 import { required, minLength, email } from "vuelidate/lib/validators";
 import axios from "axios";
 import { BASE_URL } from "@/assets/urls/config";
+
 export default {
   mixins: [validationMixin],
   data() {
@@ -68,14 +69,14 @@ export default {
       this.handleSubmit();
       let email = this.email;
       let password = this.password;
+      const that = this;
       axios
         .post(`${BASE_URL}/login`, {
           email,
           password,
         })
-        .then(function (response) {
-          console.log(response);
-          this.$router.push("welcome");
+        .then(function () {
+          that.$router.push({ path: "/listing" });
         })
         .catch(function (error) {
           console.log(error);
