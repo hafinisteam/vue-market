@@ -10,7 +10,7 @@
       <span class="d-block">Login with your email</span>
     </div>
     <div class="login-form">
-      <form action="" novalidate>
+      <form novalidate>
         <Input type="email" name="email" placeholder="Email" v-model="email" />
         <Input
           type="password"
@@ -18,7 +18,12 @@
           placeholder="Password"
           v-model="password"
         />
-        <Button :disabled="$v.$invalid" title="Login" variant="secondary" />
+        <Button
+          :disabled="$v.$invalid"
+          @onclick="login"
+          title="Login"
+          variant="secondary"
+        />
       </form>
     </div>
   </div>
@@ -28,6 +33,9 @@ import Input from "@/components/Input.vue";
 import Button from "@/components/Button.vue";
 import { validationMixin } from "vuelidate";
 import { required, minLength, email } from "vuelidate/lib/validators";
+import axios from "axios";
+import { BASE_URL } from "@/assets/urls/config";
+
 export default {
   mixins: [validationMixin],
   data() {
@@ -56,6 +64,23 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
+    },
+    login: function () {
+      this.handleSubmit();
+      let email = this.email;
+      let password = this.password;
+      const that = this;
+      axios
+        .post(`${BASE_URL}/login`, {
+          email,
+          password,
+        })
+        .then(function () {
+          that.$router.push({ path: "/listing" });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
   },
 };

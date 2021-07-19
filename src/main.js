@@ -8,12 +8,14 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 import "./assets/styles/main.scss";
 import PortalVue from "portal-vue";
 import Vuelidate from "vuelidate";
+import Axios from "axios";
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(PortalVue);
 Vue.use(Vuelidate);
 Vue.config.productionTip = false;
+Vue.prototype.$http = Axios;
 
 new Vue({
   router,
