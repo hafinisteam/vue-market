@@ -75,7 +75,11 @@ export default {
           email,
           password,
         })
-        .then(function () {
+        .then(function (response) {
+          that.$store.commit("saveToken", {
+            token: response.data.token,
+          });
+          localStorage.setItem("token", response.data.token);
           that.$router.push({ path: "/listing" });
         })
         .catch(function (error) {
