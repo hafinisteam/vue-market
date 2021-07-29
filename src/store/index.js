@@ -7,9 +7,8 @@ export default new Vuex.Store({
   state: {
     user: JSON.parse(localStorage.getItem("user")) || {},
     token: localStorage.getItem("token") || "",
-    communityData: {},
-    communityId: {},
-    communityPosts: {},
+    communityData: [],
+    communityId: "",
   },
   getters: {
     isLoggedIn: (state) => !!state.token,
@@ -18,9 +17,6 @@ export default new Vuex.Store({
     },
     communityData: (state) => {
       return state.communityData;
-    },
-    communityPosts: (state) => {
-      return state.communityPosts;
     },
   },
   mutations: {
@@ -36,9 +32,6 @@ export default new Vuex.Store({
     },
     saveCommunityId(state, payload) {
       state.communityId = payload.communityId;
-    },
-    saveCommunityPosts(state, payload) {
-      state.communityPosts = payload.communityPosts;
     },
   },
   actions: {},

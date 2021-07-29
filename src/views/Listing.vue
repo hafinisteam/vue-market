@@ -9,7 +9,10 @@
       <Header />
     </div>
     <div class="bazaar-list">
-      <div class="community-header textd-flex align-items-center flex-column">
+      <div
+        v-if="getCommunityData.length > 0"
+        class="community-header textd-flex align-items-center flex-column"
+      >
         <div
           class="bazaar-logo d-flex align-items-center justify-content-center"
         >
@@ -22,30 +25,33 @@
           </div>
         </div>
       </div>
-      <div
-        class="community-post"
-        v-for="(post, index) in getCommunityPosts"
-        :key="index.postId"
-      >
-        <div class="d-flex justify-content-between">
-          <div class="item-info">{{ post.title }}</div>
-          <div class="created">{{ post.createdAt }}</div>
-        </div>
-        <div class="item-thumb double-item">
-          <div class="thumb">
-            <img :src="post.items[0].images[0]" alt="" />
+      <div v-if="posts.length > 0">
+        <div
+          class="community-post"
+          v-for="(post, index) in posts"
+          :key="index.postId"
+        >
+          <div class="d-flex justify-content-between">
+            <div class="item-info">{{ post.title }}</div>
+            <div class="created">{{ post.createdAt }}</div>
           </div>
-          <div class="thumb">
-            <img :src="post.items[0].images[1]" alt="" />
+          <div class="item-thumb double-item">
+            <div class="thumb">
+              <img :src="post.items[0].images[0]" alt="" />
+            </div>
+            <div class="thumb">
+              <img :src="post.items[0].images[1]" alt="" />
+            </div>
           </div>
-        </div>
-        <div class="d-flex align-items-center">
-          <div class="d-flex text-center align-items-center"></div>
-          <div class="rounded-circle overflow-hidden">
-            <img :src="post.imageUrl" alt="" />
-          </div>
-          <div class="info-wrapper">
-            <div class="name">{{ post.firstName }} {{ post.lastName }}</div>
+          <div class="d-flex align-items-center">
+            <div class="d-flex text-center align-items-center"></div>
+            <div class="rounded-circle overflow-hidden">
+              <img v-if="post.imageUrl" :src="post.imageUrl" alt="" />
+              <img v-else src="../assets/icon_user.svg" alt="" />
+            </div>
+            <div class="info-wrapper">
+              <div class="name">{{ post.firstName }} {{ post.lastName }}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -57,8 +63,19 @@
 import Header from "../components/Header.vue";
 import { BASE_URL } from "@/assets/urls/config";
 import axios from "axios";
+import dayjs from "dayjs";
+dayjs().format();
+const currentDate = dayjs();
+const createdDate = dayjs("2021-01-25");
+let df = currentDate.diff(createdDate, "month");
+console.log(df);
 
 export default {
+  data() {
+    return {
+      posts: [],
+    };
+  },
   components: {
     Header,
   },
@@ -69,37 +86,30 @@ export default {
     getCommunityData: function () {
       return this.$store.getters.communityData;
     },
-    getCommunityPosts: function () {
-      return this.$store.getters.communityPosts;
-    },
-  },
-  beforeCreate() {
-    const that = this;
-    const token = localStorage.getItem("token");
-    axios
-      .get(`${BASE_URL}/communities`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(function (response) {
-        that.$store.commit("saveCommunityData", {
-          communityData: response.data,
-        });
-        that.$store.commit("saveCommunityId", {
-          communityId: response.data[0].communityId,
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  },
-  beforeMount() {
-    this.getCommunityPost();
   },
   methods: {
+    getCommunities() {
+      const token = localStorage.getItem("token");
+      axios
+        .get(`${BASE_URL}/communities`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          this.$store.commit("saveCommunityData", {
+            communityData: response.data,
+          });
+          this.$store.commit("saveCommunityId", {
+            communityId: response.data[0].communityId,
+          });
+          this.getCommunityPost();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     getCommunityPost() {
-      const that = this;
       const token = localStorage.getItem("token");
       const id = this.$store.getters.communityId;
       axios
@@ -108,21 +118,22 @@ export default {
             Authorization: `Bearer ${token}`,
           },
         })
-        .then(function (response) {
-          that.$store.commit("saveCommunityPosts", {
-            communityPosts: response.data,
-          });
-          console.log(response.data);
+        .then((response) => {
+          this.posts = response.data;
         })
         .catch(function (error) {
           console.log(error);
         });
     },
+    handleRedirect() {
+      if (this.isLoggedIn == false) {
+        return this.$router.push({ path: "/" });
+      }
+    },
   },
   mounted: function () {
-    if (this.isLoggedIn == false) {
-      return this.$router.push({ path: "/" });
-    }
+    this.handleRedirect();
+    this.getCommunities();
   },
 };
 </script>
