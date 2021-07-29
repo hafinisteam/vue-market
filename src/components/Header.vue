@@ -1,6 +1,8 @@
 <template>
   <div class="user-area">
-    <b-dropdown class="account">
+    <span class="squad-icon"> </span>
+    <div class="btn-sell">Sell</div>
+    <b-dropdown class="dropdown-btn">
       <template #button-content>
         <img src="../assets/icon_user.svg" class="user-avatar" alt="" />
       </template>
@@ -26,7 +28,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .user-area {
   width: 180px;
   display: flex;
@@ -35,17 +37,16 @@ export default {
   -webkit-box-align: center;
   align-items: center;
 }
+.user-avatar {
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgb(230, 230, 230);
+  border-radius: 50%;
+}
 
-.account {
-  .user-avatar {
-    cursor: pointer;
-    width: 28px;
-    height: 28px;
-    border: 3px solid rgb(230, 230, 230);
-    border-radius: 50%;
-  }
-
-  .dropdown-toggle {
+.dropdown-btn {
+  .btn-secondary {
     color: #fff;
     background-color: white;
     border-color: white;
@@ -58,13 +59,23 @@ export default {
       border-color: white;
       box-shadow: none;
     }
-  }
 
-  .menuItem {
-    img {
-      width: 20px;
-      margin-right: 15px;
+    &::after {
+      display: none;
     }
   }
+}
+
+.menuItem {
+  img {
+    width: 20px;
+    margin-right: 15px;
+  }
+}
+.btn-sell {
+  font-weight: 800;
+  font-size: 16px;
+  color: rgb(103, 78, 255);
+  cursor: pointer;
 }
 </style>

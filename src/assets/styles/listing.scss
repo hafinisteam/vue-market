@@ -1,5 +1,4 @@
 #listing {
-  position: fixed;
   padding: 10px 24px;
   width: 100%;
   top: 0px;
@@ -11,8 +10,121 @@
 
   .logo {
     left: 50%;
-    top: 50%;
+    top: 0;
+    padding-top: 50px;
     transform: translate(-50%, -50%);
     position: absolute;
+  }
+
+  .bazaar-list {
+    padding-top: 50px;
+
+    .community-header {
+      margin-bottom: 40px;
+
+      .bazaar-logo {
+        width: 56px;
+        height: 56px;
+        background-color: rgb(249, 249, 249);
+        border-radius: 50%;
+        position: relative;
+        overflow: hidden;
+        margin: 0 auto;
+      }
+
+      .community-name {
+        font-size: 16px;
+        font-weight: 800;
+      }
+
+      .member-count {
+        font-size: 12px;
+        color: rgb(175, 175, 175);
+        font-weight: 800;
+      }
+    }
+
+    .community-post {
+      width: 478px;
+      margin: 0 auto;
+      margin-bottom: 40px;
+
+      .item-info {
+        font-size: 16px;
+        font-weight: 800;
+        margin-bottom: 13px;
+      }
+
+      .item-thumb {
+        margin-bottom: 15px;
+        border-radius: 16px;
+        overflow: hidden;
+        display: flex;
+        flex-flow: row wrap;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+
+        .thumb {
+          width: calc(50% - 1px);
+          height: 162px;
+          background-color: rgb(187, 192, 196);
+          flex: 0 0 auto;
+          overflow: hidden;
+          margin-bottom: 2px;
+          position: relative;
+
+          img {
+            position: absolute;
+            width: 100%;
+            height: auto;
+            left: 0px;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+        }
+
+        &.double-item .thumb {
+          height: 328px;
+
+          img {
+            position: absolute;
+            height: 100%;
+            width: auto;
+            top: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+          }
+        }
+
+
+      }
+
+      .rounded-circle {
+        position: relative;
+        width: 40px;
+        height: 40px;
+
+        img {
+          position: absolute;
+          left: 0px;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 100%;
+          height: auto;
+          margin: 0px auto;
+        }
+      }
+
+      .info-wrapper {
+        text-align: left;
+        margin-left: 15px;
+        margin-top: 0px;
+
+        .name {
+          font-size: 14px;
+          font-weight: 800;
+        }
+      }
+    }
   }
 }
