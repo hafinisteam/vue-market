@@ -9,6 +9,7 @@ import "./assets/styles/main.scss";
 import PortalVue from "portal-vue";
 import Vuelidate from "vuelidate";
 import Axios from "axios";
+import VueCarousel from "vue-carousel";
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
@@ -16,6 +17,7 @@ Vue.use(PortalVue);
 Vue.use(Vuelidate);
 Vue.config.productionTip = false;
 Vue.prototype.$http = Axios;
+Vue.use(VueCarousel);
 
 new Vue({
   router,

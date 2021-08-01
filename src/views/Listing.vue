@@ -31,28 +31,29 @@
           v-for="(post, index) in posts"
           :key="index.postId"
         >
-          <div class="d-flex justify-content-between">
-            <div class="item-info">{{ post.title }}</div>
-            <div class="created">{{ post.createdAt }}</div>
-          </div>
-          <div class="item-thumb double-item">
-            <div class="thumb">
-              <img :src="post.items[0].images[0]" alt="" />
+          <router-link class="to-details" :to="'/listing/' + post.postId">
+            <div class="d-flex justify-content-between">
+              <div class="item-info mb-3">{{ post.title }}</div>
+              <div class="created">{{ post.createdAt }}</div>
             </div>
-            <div class="thumb">
-              <img :src="post.items[0].images[1]" alt="" />
+            <div class="item-thumb double-item">
+              <div class="thumb">
+                <img :src="post.items[0].images[0]" alt="" />
+              </div>
+              <div class="thumb">
+                <img :src="post.items[0].images[1]" alt="" />
+              </div>
             </div>
-          </div>
-          <div class="d-flex align-items-center">
-            <div class="d-flex text-center align-items-center"></div>
-            <div class="rounded-circle overflow-hidden">
-              <img v-if="post.imageUrl" :src="post.imageUrl" alt="" />
-              <img v-else src="../assets/icon_user.svg" alt="" />
+            <div class="d-flex align-items-center">
+              <div class="rounded-circle overflow-hidden">
+                <img v-if="post.imageUrl" :src="post.imageUrl" alt="" />
+                <img v-else src="../assets/icon_user.svg" alt="" />
+              </div>
+              <div class="info-wrapper ml-2">
+                <div class="name">{{ post.firstName }} {{ post.lastName }}</div>
+              </div>
             </div>
-            <div class="info-wrapper">
-              <div class="name">{{ post.firstName }} {{ post.lastName }}</div>
-            </div>
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -120,6 +121,9 @@ export default {
         })
         .then((response) => {
           this.posts = response.data;
+          this.$store.commit("savePostId", {
+            postId: response.data.postId,
+          });
         })
         .catch(function (error) {
           console.log(error);

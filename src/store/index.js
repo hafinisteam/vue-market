@@ -9,6 +9,7 @@ export default new Vuex.Store({
     token: localStorage.getItem("token") || "",
     communityData: [],
     communityId: "",
+    postId: "",
   },
   getters: {
     isLoggedIn: (state) => !!state.token,
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     },
     communityData: (state) => {
       return state.communityData;
+    },
+    postId: (state) => {
+      return state.postId;
     },
   },
   mutations: {
@@ -32,6 +36,9 @@ export default new Vuex.Store({
     },
     saveCommunityId(state, payload) {
       state.communityId = payload.communityId;
+    },
+    savePostId(state, payload) {
+      state.postId = payload.postId;
     },
   },
   actions: {},
