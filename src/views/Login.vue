@@ -20,18 +20,7 @@
             v-model="password"
           />
           <div v-on:click="showPassword" class="icon-wrapper">
-            <img
-              v-if="type === 'password'"
-              src="../assets/icon_eye.svg"
-              class="icon"
-              alt=""
-            />
-            <img
-              v-else
-              src="../assets/icon_eye_closed.svg"
-              class="icon"
-              alt=""
-            />
+            <img :src="getPasswordIcon()" class="icon" alt="" />
           </div>
         </div>
 
@@ -78,6 +67,11 @@ export default {
     Input,
   },
   methods: {
+    getPasswordIcon() {
+      return this.type === "password"
+        ? require("../assets/icon_eye.svg")
+        : require("../assets/icon_eye_closed.svg");
+    },
     showPassword() {
       if (this.type === "password") {
         this.type = "text";
@@ -95,18 +89,17 @@ export default {
       this.handleSubmit();
       let email = this.email;
       let password = this.password;
-      const that = this;
       axios
         .post(`${BASE_URL}/login`, {
           email,
           password,
         })
-        .then(function (response) {
-          that.$store.commit("saveToken", {
+        .then((response) => {
+          this.$store.commit("saveToken", {
             token: response.data.token,
           });
           localStorage.setItem("token", response.data.token);
-          that.$router.push({ path: "/listing" });
+          this.$router.push({ path: "/listing" });
         })
         .catch(function (error) {
           console.log(error);

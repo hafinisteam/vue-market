@@ -32,14 +32,14 @@
             <div
               class="item-thumb"
               v-bind:class="{
-                'single-item': post.items[0].images.length == 1,
-                'double-item': post.items[0].images.length == 2,
-                'triple-item': post.items[0].images.length == 3,
+                'single-item': getPostImages(post).length == 1,
+                'double-item': getPostImages(post).length == 2,
+                'triple-item': getPostImages(post).length == 3,
               }"
             >
               <div
-                v-for="(image, index) in post.items[0].images"
-                :key="index.images"
+                v-for="(image, index) in getPostImages(post)"
+                :key="index"
                 class="thumb"
               >
                 <img :src="image" alt="" />
@@ -91,6 +91,13 @@ export default {
     parseDay(date) {
       return dayjs().to(dayjs(date));
     },
+    getPostImages(post) {
+      return post.items
+        .map((item) => {
+          return item.images;
+        })
+        .flat();
+    },
     getCommunities() {
       const token = localStorage.getItem("token");
       axios
@@ -126,7 +133,6 @@ export default {
           this.$store.commit("savePostId", {
             postId: response.data.postId,
           });
-          console.log(response.data);
         })
         .catch(function (error) {
           console.log(error);

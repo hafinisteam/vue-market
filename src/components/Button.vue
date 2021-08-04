@@ -74,7 +74,6 @@ export default {
     onClick() {
       this.$emit("onclick");
       this.busy = true;
-      // Simulate an async request
       this.setTimeout(() => {
         this.busy = false;
       });
