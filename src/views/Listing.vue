@@ -1,13 +1,6 @@
 <template>
   <div id="listing">
-    <div
-      class="header-inner w-100 d-flex align-items-center justify-content-end"
-    >
-      <div class="logo">
-        <img src="../assets/bazaar_logo.svg" alt="" />
-      </div>
-      <Header />
-    </div>
+    <Header />
     <div class="bazaar-list">
       <div
         v-if="getCommunityData.length > 0"
@@ -31,28 +24,37 @@
           v-for="(post, index) in posts"
           :key="index.postId"
         >
-          <div class="d-flex justify-content-between">
-            <div class="item-info">{{ post.title }}</div>
-            <div class="created">{{ post.createdAt }}</div>
-          </div>
-          <div class="item-thumb double-item">
-            <div class="thumb">
-              <img :src="post.items[0].images[0]" alt="" />
+          <router-link class="to-details" :to="'/listing/' + post.postId">
+            <div class="d-flex justify-content-between">
+              <div class="item-info mb-3">{{ post.title }}</div>
+              <div class="created">{{ parseDay(post.createdAt) }}</div>
             </div>
-            <div class="thumb">
-              <img :src="post.items[0].images[1]" alt="" />
+            <div
+              class="item-thumb"
+              v-bind:class="{
+                'single-item': getPostImages(post).length == 1,
+                'double-item': getPostImages(post).length == 2,
+                'triple-item': getPostImages(post).length == 3,
+              }"
+            >
+              <div
+                v-for="(image, index) in getPostImages(post)"
+                :key="index"
+                class="thumb"
+              >
+                <img :src="image" alt="" />
+              </div>
             </div>
-          </div>
-          <div class="d-flex align-items-center">
-            <div class="d-flex text-center align-items-center"></div>
-            <div class="rounded-circle overflow-hidden">
-              <img v-if="post.imageUrl" :src="post.imageUrl" alt="" />
-              <img v-else src="../assets/icon_user.svg" alt="" />
+            <div class="d-flex align-items-center">
+              <div class="rounded-circle overflow-hidden">
+                <img v-if="post.imageUrl" :src="post.imageUrl" alt="" />
+                <img v-else src="../assets/icon_user.svg" alt="" />
+              </div>
+              <div class="info-wrapper">
+                <div class="name">{{ post.firstName }} {{ post.lastName }}</div>
+              </div>
             </div>
-            <div class="info-wrapper">
-              <div class="name">{{ post.firstName }} {{ post.lastName }}</div>
-            </div>
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -64,11 +66,9 @@ import Header from "../components/Header.vue";
 import { BASE_URL } from "@/assets/urls/config";
 import axios from "axios";
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 dayjs().format();
-const currentDate = dayjs();
-const createdDate = dayjs("2021-01-25");
-let df = currentDate.diff(createdDate, "month");
-console.log(df);
 
 export default {
   data() {
@@ -88,6 +88,16 @@ export default {
     },
   },
   methods: {
+    parseDay(date) {
+      return dayjs().to(dayjs(date));
+    },
+    getPostImages(post) {
+      return post.items
+        .map((item) => {
+          return item.images;
+        })
+        .flat();
+    },
     getCommunities() {
       const token = localStorage.getItem("token");
       axios
@@ -120,6 +130,9 @@ export default {
         })
         .then((response) => {
           this.posts = response.data;
+          this.$store.commit("savePostId", {
+            postId: response.data.postId,
+          });
         })
         .catch(function (error) {
           console.log(error);

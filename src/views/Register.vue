@@ -35,17 +35,34 @@
         />
         <label for="Account">Account</label>
         <Input v-model="email" type="email" name="email" placeholder="Email" />
-        <Input
-          v-model="password"
-          type="password"
-          name="password"
-          placeholder="Password"
-        />
+        <div class="password-form">
+          <Input
+            :type="type"
+            name="password"
+            placeholder="Password"
+            v-model="password"
+          />
+          <div v-on:click="showPassword" class="icon-wrapper">
+            <img
+              v-if="type === 'password'"
+              src="../assets/icon_eye.svg"
+              class="icon"
+              alt=""
+            />
+            <img
+              v-else
+              src="../assets/icon_eye_closed.svg"
+              class="icon"
+              alt=""
+            />
+          </div>
+        </div>
         <Button
           :disabled="$v.$invalid"
           title="Create an account"
           variant="secondary"
           @onclick="signup"
+          :loading="true"
         />
       </form>
     </div>
@@ -70,6 +87,7 @@ export default {
       firstName: "",
       lastName: "",
       username: "",
+      type: "password",
     };
   },
   validations: {
@@ -103,6 +121,13 @@ export default {
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
+      }
+    },
+    showPassword() {
+      if (this.type === "password") {
+        this.type = "text";
+      } else {
+        this.type = "password";
       }
     },
     signup: function () {
