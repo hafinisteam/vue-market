@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="loading === false">
     <b-button
       class="btn-default"
       :variant="variant"
@@ -8,10 +8,37 @@
       >{{ title }}</b-button
     >
   </div>
+  <div v-else>
+    <b-overlay
+      :show="busy"
+      rounded
+      opacity="0.6"
+      spinner-small
+      spinner-variant="primary"
+    >
+      <b-button
+        class="btn-default"
+        :variant="variant"
+        :disabled="disabled"
+        @click="onClick"
+      >
+        {{ title }}
+      </b-button>
+    </b-overlay>
+  </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      busy: false,
+      timeout: null,
+    };
+  },
+  beforeDestroy() {
+    this.clearTimeout();
+  },
   props: {
     title: {
       type: String,
@@ -22,10 +49,35 @@ export default {
     disabled: {
       type: Boolean,
     },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     handleClick() {
       this.$emit("onclick");
+    },
+    clearTimeout() {
+      if (this.timeout) {
+        clearTimeout(this.timeout);
+        this.timeout = null;
+      }
+    },
+    setTimeout(callback) {
+      this.clearTimeout();
+      this.timeout = setTimeout(() => {
+        this.clearTimeout();
+        callback();
+      }, 3000);
+    },
+    onClick() {
+      this.$emit("onclick");
+      this.busy = true;
+      // Simulate an async request
+      this.setTimeout(() => {
+        this.busy = false;
+      });
     },
   },
 };
@@ -52,6 +104,11 @@ export default {
   transition: all 0.3s ease-in-out 0s;
   &:hover {
     background: rgb(91, 68, 226);
+  }
+  &:focus {
+    background: rgb(103, 78, 255) !important;
+    border: 1px solid rgb(103, 78, 255) !important;
+    box-shadow: none !important;
   }
   &.btn-primary {
     background-color: rgb(255, 225, 243);

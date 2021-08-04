@@ -12,17 +12,35 @@
     <div class="login-form">
       <form novalidate>
         <Input type="email" name="email" placeholder="Email" v-model="email" />
-        <Input
-          type="password"
-          name="password"
-          placeholder="Password"
-          v-model="password"
-        />
+        <div class="password-form">
+          <Input
+            :type="type"
+            name="password"
+            placeholder="Password"
+            v-model="password"
+          />
+          <div v-on:click="showPassword" class="icon-wrapper">
+            <img
+              v-if="type === 'password'"
+              src="../assets/icon_eye.svg"
+              class="icon"
+              alt=""
+            />
+            <img
+              v-else
+              src="../assets/icon_eye_closed.svg"
+              class="icon"
+              alt=""
+            />
+          </div>
+        </div>
+
         <Button
           :disabled="$v.$invalid"
           @onclick="login"
           title="Login"
           variant="secondary"
+          :loading="true"
         />
       </form>
     </div>
@@ -42,6 +60,7 @@ export default {
     return {
       email: "",
       password: "",
+      type: "password",
     };
   },
   validations: {
@@ -59,6 +78,13 @@ export default {
     Input,
   },
   methods: {
+    showPassword() {
+      if (this.type === "password") {
+        this.type = "text";
+      } else {
+        this.type = "password";
+      }
+    },
     handleSubmit() {
       this.$v.$touch();
       if (this.$v.$invalid) {

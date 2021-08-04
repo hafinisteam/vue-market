@@ -1,13 +1,6 @@
 <template>
   <div id="listing">
-    <div
-      class="header-inner w-100 d-flex align-items-center justify-content-end"
-    >
-      <div class="logo">
-        <img src="../assets/bazaar_logo.svg" alt="" />
-      </div>
-      <Header />
-    </div>
+    <Header />
     <div class="bazaar-list">
       <div
         v-if="getCommunityData.length > 0"
@@ -34,14 +27,22 @@
           <router-link class="to-details" :to="'/listing/' + post.postId">
             <div class="d-flex justify-content-between">
               <div class="item-info mb-3">{{ post.title }}</div>
-              <div class="created">{{ post.createdAt }}</div>
+              <div class="created">{{ parseDay(post.createdAt) }}</div>
             </div>
-            <div class="item-thumb double-item">
-              <div class="thumb">
-                <img :src="post.items[0].images[0]" alt="" />
-              </div>
-              <div class="thumb">
-                <img :src="post.items[0].images[1]" alt="" />
+            <div
+              class="item-thumb"
+              v-bind:class="{
+                'single-item': post.items[0].images.length == 1,
+                'double-item': post.items[0].images.length == 2,
+                'triple-item': post.items[0].images.length == 3,
+              }"
+            >
+              <div
+                v-for="(image, index) in post.items[0].images"
+                :key="index.images"
+                class="thumb"
+              >
+                <img :src="image" alt="" />
               </div>
             </div>
             <div class="d-flex align-items-center">
@@ -49,7 +50,7 @@
                 <img v-if="post.imageUrl" :src="post.imageUrl" alt="" />
                 <img v-else src="../assets/icon_user.svg" alt="" />
               </div>
-              <div class="info-wrapper ml-2">
+              <div class="info-wrapper">
                 <div class="name">{{ post.firstName }} {{ post.lastName }}</div>
               </div>
             </div>
@@ -65,11 +66,9 @@ import Header from "../components/Header.vue";
 import { BASE_URL } from "@/assets/urls/config";
 import axios from "axios";
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 dayjs().format();
-const currentDate = dayjs();
-const createdDate = dayjs("2021-01-25");
-let df = currentDate.diff(createdDate, "month");
-console.log(df);
 
 export default {
   data() {
@@ -89,6 +88,9 @@ export default {
     },
   },
   methods: {
+    parseDay(date) {
+      return dayjs().to(dayjs(date));
+    },
     getCommunities() {
       const token = localStorage.getItem("token");
       axios
@@ -124,6 +126,7 @@ export default {
           this.$store.commit("savePostId", {
             postId: response.data.postId,
           });
+          console.log(response.data);
         })
         .catch(function (error) {
           console.log(error);

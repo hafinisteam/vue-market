@@ -1,18 +1,25 @@
 <template>
-  <div class="user-area">
-    <span class="squad-icon"> </span>
-    <div class="btn-sell">Sell</div>
-    <b-dropdown class="dropdown-btn">
-      <template #button-content>
-        <img src="../assets/icon_user.svg" class="user-avatar" alt="" />
-      </template>
-      <b-dropdown-item href="#">
-        <span v-on:click="logout" class="menuItem" role="menuitem">
-          <img src="../assets/icon_logout.svg" alt="" />
-          Logout
-        </span></b-dropdown-item
-      >
-    </b-dropdown>
+  <div class="header-inner w-100 d-flex align-items-center justify-content-end">
+    <div class="logo">
+      <router-link to="/listing">
+        <img src="../assets/bazaar_logo.svg" alt="" />
+      </router-link>
+    </div>
+    <div class="user-area">
+      <span class="squad-icon"> </span>
+      <div class="btn-sell">Sell</div>
+      <b-dropdown class="dropdown-btn">
+        <template #button-content>
+          <img src="../assets/icon_user.svg" class="user-avatar" alt="" />
+        </template>
+        <b-dropdown-item href="#">
+          <span v-on:click="logout" class="menuItem" role="menuitem">
+            <img src="../assets/icon_logout.svg" alt="" />
+            Logout
+          </span></b-dropdown-item
+        >
+      </b-dropdown>
+    </div>
   </div>
 </template>
 
@@ -47,9 +54,9 @@ export default {
 
 .dropdown-btn {
   .btn-secondary {
-    color: #fff;
-    background-color: white;
-    border-color: white;
+    color: #fff !important;
+    background-color: white !important;
+    border-color: white !important;
     box-shadow: none;
 
     &:hover,
