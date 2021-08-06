@@ -2,6 +2,7 @@
   <div v-if="loading === false">
     <b-button
       class="btn-default"
+      :type="type"
       :variant="variant"
       @click="handleClick"
       :disabled="disabled"
@@ -21,6 +22,7 @@
         :variant="variant"
         :disabled="disabled"
         @click="onClick"
+        :type="type"
       >
         {{ title }}
       </b-button>
@@ -52,6 +54,9 @@ export default {
     loading: {
       type: Boolean,
       default: false,
+    },
+    type: {
+      type: String,
     },
   },
   methods: {

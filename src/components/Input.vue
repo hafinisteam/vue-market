@@ -5,6 +5,8 @@
       :type="type"
       :name="name"
       :placeholder="placeholder"
+      :readonly="readonly"
+      :disabled="disabled"
       v-model="content"
     ></b-form-input>
   </div>
@@ -29,6 +31,12 @@ export default {
     },
     value: {
       type: String,
+    },
+    readonly: {
+      type: String,
+    },
+    disabled: {
+      type: Boolean,
     },
   },
   watch: {
