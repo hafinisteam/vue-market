@@ -98,7 +98,11 @@ export default {
           this.$store.commit("saveToken", {
             token: response.data.token,
           });
+          this.$store.commit("saveUser", {
+            user: response.data.user,
+          });
           localStorage.setItem("token", response.data.token);
+          localStorage.setItem("user", JSON.stringify(response.data.user));
           this.$router.push({ path: "/listing" });
         })
         .catch(function (error) {

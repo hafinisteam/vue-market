@@ -103,4 +103,41 @@
       height: 100%;
     }
   }
+
+  .community-link {
+    position: relative;
+
+    input {
+      background-color: #e9ecef;
+      border: 1px solid rgb(249, 249, 249);
+      border-radius: 12px;
+      background: rgb(249, 249, 249);
+      padding: .375rem .75rem;
+      padding-left: 1rem;
+      padding-right: 3rem;
+      font-size: 14px;
+      height: calc(1.5em + 0.75rem + 14px);
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+
+    .icon-wrapper {
+      cursor: pointer;
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      margin-right: 15px;
+      width: min-content;
+      height: calc(1.5em + 0.75rem + 14px);
+      display: flex;
+      -webkit-box-align: center;
+      align-items: center;
+
+      .icon {
+        width: 20px;
+        height: 20px
+      }
+
+    }
+  }
 }

@@ -93,7 +93,10 @@
             </div>
           </div>
           <div class="community-link">
-            <Input type="text" name="communityLink" readonly disabled />
+            <input type="text" :value="inviteUrl" readonly disabled />
+            <div v-on:click="handleCopy" class="icon-wrapper">
+              <img :src="getCopyIcon()" class="icon" alt="" />
+            </div>
           </div>
           <div class="form-footer">
             <router-link to="/listing">
@@ -113,7 +116,7 @@ import Input from "@/components/Input.vue";
 import Button from "@/components/Button.vue";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
-
+import copy from "copy-to-clipboard";
 export default {
   mixins: [validationMixin],
 
@@ -123,6 +126,8 @@ export default {
       name: "",
       imageUrl: "",
       isStep1: true,
+      inviteUrl: "",
+      isCopy: false,
     };
   },
   validations: {
@@ -149,6 +154,15 @@ export default {
       this.imageUrl = URL.createObjectURL(url);
       this.file = e.target.files[0];
     },
+    getCopyIcon() {
+      return this.isCopy === true
+        ? require("../assets/icon_tick.svg")
+        : require("../assets/icon_copy.svg");
+    },
+    handleCopy() {
+      copy(this.inviteUrl);
+      this.isCopy = true;
+    },
     createCommunity() {
       this.handleSubmit();
       const token = localStorage.getItem("token");
@@ -162,11 +176,32 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res);
           this.isStep1 = false;
+          const slug = res.data.communitySlug;
+          const user = this.$store.getters.getUser;
+          const { username } = user;
+          this.inviteUrl = `${window.location.origin}/community/invite?slug=${slug}&inviter=${username}`;
+          this.getCommunities();
         })
         .catch((err) => {
           console.log(err);
+        });
+    },
+    getCommunities() {
+      const token = localStorage.getItem("token");
+      axios
+        .get(`${BASE_URL}/communities`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          this.$store.commit("saveCommunityData", {
+            communityData: response.data,
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
         });
     },
   },
