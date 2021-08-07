@@ -36,6 +36,14 @@ const routes = [
         /* webpackChunkName: "listing-details" */ "../views/ListingDetails.vue"
       ),
   },
+  {
+    path: "/community/create",
+    name: "Create community",
+    component: () =>
+      import(
+        /* webpackChunkName: "create-community" */ "../views/CreateCommunity.vue"
+      ),
+  },
 ];
 
 const router = new VueRouter({

@@ -22,10 +22,16 @@ export default new Vuex.Store({
     postId: (state) => {
       return state.postId;
     },
+    getUser: (state) => {
+      return state.user;
+    },
   },
   mutations: {
     saveToken(state, payload) {
       state.token = payload.token;
+    },
+    saveUser(state, payload) {
+      state.user = payload.user;
     },
     logOut(state) {
       state.token = "";

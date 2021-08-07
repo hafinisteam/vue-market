@@ -6,7 +6,9 @@
       </router-link>
     </div>
     <div class="user-area">
-      <span class="squad-icon"> </span>
+      <span class="squad-icon fs-12">
+        <router-link to="/community/create"> New Community </router-link>
+      </span>
       <div class="btn-sell">Sell</div>
       <b-dropdown class="dropdown-btn">
         <template #button-content>
@@ -37,7 +39,7 @@ export default {
 
 <style lang="scss">
 .user-area {
-  width: 180px;
+  width: 200px;
   display: flex;
   -webkit-box-pack: justify;
   justify-content: space-between;

@@ -1,0 +1,143 @@
+.create-community {
+  .logo {
+    margin-top: 20px;
+    margin-bottom: 70px;
+  }
+
+  .create-form {
+    width: 100%;
+    max-width: 327px;
+    margin: 0 auto;
+
+    label {
+      font-weight: bold;
+      font-size: 14px;
+      color: #c7c7c7;
+      text-align: left;
+      display: block;
+      margin-bottom: 10px;
+    }
+  }
+
+  .form-header {
+    margin-bottom: 56px;
+  }
+
+  .form-footer {
+    margin-top: 55px;
+  }
+
+  .avatar-wrapper {
+    margin-bottom: 32px;
+
+    .inner {
+      display: inline-block;
+      position: relative;
+    }
+  }
+
+  .avatar {
+    opacity: 0;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 0;
+    left: 0;
+  }
+
+  .placeholder {
+    width: 100px;
+    height: 100px;
+    background-color: rgb(249, 249, 249);
+    border-radius: 50%;
+    position: relative;
+
+    img {
+      width: 31px;
+      height: 27px;
+    }
+
+    .add {
+      width: 32px;
+      height: 32px;
+      background: rgb(103, 78, 255);
+      border-radius: 50%;
+      display: flex;
+      -webkit-box-pack: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      align-items: center;
+      right: -6px;
+      top: 2px;
+      position: absolute;
+      cursor: pointer;
+    }
+  }
+
+  .preview {
+    width: 100px;
+    height: 100px;
+    background-color: rgb(249, 249, 249);
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+
+    img {
+      border-radius: 50%;
+      position: absolute;
+      width: 100%;
+      height: auto;
+      left: 0px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  .change-photo {
+    color: rgb(103, 78, 255);
+    position: relative;
+    margin-top: 5px;
+
+    .avatar {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .community-link {
+    position: relative;
+
+    input {
+      background-color: #e9ecef;
+      border: 1px solid rgb(249, 249, 249);
+      border-radius: 12px;
+      background: rgb(249, 249, 249);
+      padding: .375rem .75rem;
+      padding-left: 1rem;
+      padding-right: 3rem;
+      font-size: 14px;
+      height: calc(1.5em + 0.75rem + 14px);
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+
+    .icon-wrapper {
+      cursor: pointer;
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      margin-right: 15px;
+      width: min-content;
+      height: calc(1.5em + 0.75rem + 14px);
+      display: flex;
+      -webkit-box-align: center;
+      align-items: center;
+
+      .icon {
+        width: 20px;
+        height: 20px
+      }
+
+    }
+  }
+}
