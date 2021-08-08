@@ -1,6 +1,7 @@
 <template>
   <div id="listing">
     <Header />
+    <Sidebar />
     <div class="bazaar-list">
       <div
         v-if="getCommunityData.length > 0"
@@ -63,6 +64,7 @@
 
 <script>
 import Header from "../components/Header.vue";
+import Sidebar from "../components/Sidebar.vue";
 import { BASE_URL } from "@/assets/urls/config";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -78,6 +80,7 @@ export default {
   },
   components: {
     Header,
+    Sidebar,
   },
   computed: {
     isLoggedIn: function () {
