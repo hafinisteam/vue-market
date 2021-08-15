@@ -4,18 +4,18 @@
     <Sidebar />
     <div class="bazaar-list">
       <div
-        v-if="getCommunityData.length > 0"
+        v-if="getCurrentCommunity"
         class="community-header textd-flex align-items-center flex-column"
       >
         <div
           class="bazaar-logo d-flex align-items-center justify-content-center"
         >
-          <img class="w-100" :src="getCommunityData[0].imageUrl" alt="" />
+          <img class="w-100" :src="getCurrentCommunity.imageUrl" alt="" />
         </div>
         <div class="mt-2 text-center">
-          <div class="mb-1 community-name">{{ getCommunityData[0].name }}</div>
+          <div class="mb-1 community-name">{{ getCurrentCommunity.name }}</div>
           <div class="d-inline-block member-count">
-            {{ getCommunityData[0].membersCount }} members
+            {{ getCurrentCommunity.membersCount }} members
           </div>
         </div>
       </div>
@@ -58,6 +58,10 @@
           </router-link>
         </div>
       </div>
+      <div v-else>
+        <img src="../assets/data_placeholder.png" alt="" />
+        <div>No post yet :)</div>
+      </div>
     </div>
   </div>
 </template>
@@ -89,6 +93,17 @@ export default {
     getCommunityData: function () {
       return this.$store.getters.communityData;
     },
+    getCurrentCommunity: function () {
+      return this.$store.getters.currentCommunity;
+    },
+    currentId: function () {
+      return this.$store.getters.communityId;
+    },
+  },
+  watch: {
+    currentId() {
+      this.getCommunityPost();
+    },
   },
   methods: {
     parseDay(date) {
@@ -100,27 +115,6 @@ export default {
           return item.images;
         })
         .flat();
-    },
-    getCommunities() {
-      const token = localStorage.getItem("token");
-      axios
-        .get(`${BASE_URL}/communities`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          this.$store.commit("saveCommunityData", {
-            communityData: response.data,
-          });
-          this.$store.commit("saveCommunityId", {
-            communityId: response.data[0].communityId,
-          });
-          this.getCommunityPost();
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
     },
     getCommunityPost() {
       const token = localStorage.getItem("token");
@@ -149,7 +143,7 @@ export default {
   },
   mounted: function () {
     this.handleRedirect();
-    this.getCommunities();
+    this.getCommunityPost();
   },
 };
 </script>

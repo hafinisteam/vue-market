@@ -3,16 +3,24 @@
     <b-sidebar id="communities-sidebar" lazy no-header v-model="visible">
       <template>
         <div v-if="getCommunityData.length > 0" class="community-thumblist">
-          <img :src="getCommunityData[0].imageUrl" style="z-index: 20" alt="" />
-          <img :src="getCommunityData[1].imageUrl" style="z-index: 19" alt="" />
-          <img :src="getCommunityData[2].imageUrl" style="z-index: 18" alt="" />
-          <img :src="getCommunityData[3].imageUrl" style="z-index: 17" alt="" />
+          <img
+            v-for="(item, index) in getCommunityData.slice(0, 4)"
+            :key="index.communityId"
+            :src="item.imageUrl"
+            :style="{ zIndex: 20 - index }"
+            alt=""
+          />
         </div>
-        <div class="community-button-wrapper">
+        <div
+          v-if="getCommunityData.length > 0"
+          class="community-button-wrapper"
+        >
           <div
             v-for="(item, index) in getCommunityData"
             :key="index.communityId"
             class="btn-community"
+            :class="{ active: item.communityId === getCurrentId }"
+            v-on:click="handleCurrentId(item, index)"
           >
             <img :src="item.imageUrl" alt="" />
           </div>
@@ -54,6 +62,19 @@ export default {
   computed: {
     getCommunityData: function () {
       return this.$store.getters.communityData;
+    },
+    getCurrentId: function () {
+      return this.$store.getters.communityId;
+    },
+  },
+  methods: {
+    handleCurrentId(item) {
+      this.$store.commit("saveCurrentCommunityId", {
+        communityId: item.communityId,
+      });
+      this.$store.commit("saveCurrentCommunity", {
+        currentCommunity: item,
+      });
     },
   },
 };
@@ -98,6 +119,15 @@ export default {
   cursor: pointer;
   margin-bottom: 2rem;
   position: relative;
+}
+.btn-community.active:after {
+  content: "";
+  width: 3px;
+  height: 100%;
+  right: 0px;
+  top: 0px;
+  background-color: rgb(103, 78, 255);
+  position: absolute;
 }
 .btn-community img {
   box-shadow: rgb(0 0 0 / 6%) 0px 6px 12px;

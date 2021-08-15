@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import VuexPersistence from "vuex-persist";
 
 Vue.use(Vuex);
 
@@ -7,8 +8,10 @@ export default new Vuex.Store({
   state: {
     user: JSON.parse(localStorage.getItem("user")) || {},
     token: localStorage.getItem("token") || "",
-    communityData: [],
-    communityId: "",
+    communityData: JSON.parse(localStorage.getItem("communityData")) || [],
+    communityId: localStorage.getItem("communityId") || "",
+    currentCommunity:
+      JSON.parse(localStorage.getItem("currentCommunity")) || {},
     postId: "",
   },
   getters: {
@@ -25,6 +28,9 @@ export default new Vuex.Store({
     getUser: (state) => {
       return state.user;
     },
+    currentCommunity: (state) => {
+      return state.currentCommunity;
+    },
   },
   mutations: {
     saveToken(state, payload) {
@@ -40,8 +46,11 @@ export default new Vuex.Store({
     saveCommunityData(state, payload) {
       state.communityData = payload.communityData;
     },
-    saveCommunityId(state, payload) {
+    saveCurrentCommunityId(state, payload) {
       state.communityId = payload.communityId;
+    },
+    saveCurrentCommunity(state, payload) {
+      state.currentCommunity = payload.currentCommunity;
     },
     savePostId(state, payload) {
       state.postId = payload.postId;
@@ -49,4 +58,5 @@ export default new Vuex.Store({
   },
   actions: {},
   modules: {},
+  plugins: [new VuexPersistence().plugin],
 });

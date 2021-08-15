@@ -1,6 +1,7 @@
 <template>
   <div id="listing-details">
     <Header />
+    <Sidebar />
     <div class="text-center mb-4 mt-4">
       <div class="item-info mb-2">
         {{ listingDetails.title }}
@@ -58,6 +59,7 @@
 
 <script>
 import Header from "../components/Header.vue";
+import Sidebar from "../components/Sidebar.vue";
 import { BASE_URL } from "@/assets/urls/config";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -73,6 +75,7 @@ export default {
   },
   components: {
     Header,
+    Sidebar,
   },
   methods: {
     parseDay(date) {

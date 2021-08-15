@@ -103,6 +103,36 @@ export default {
           });
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("user", JSON.stringify(response.data.user));
+          this.getCommunities();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    getCommunities() {
+      const token = localStorage.getItem("token");
+      axios
+        .get(`${BASE_URL}/communities`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          this.$store.commit("saveCommunityData", {
+            communityData: response.data,
+          });
+          this.$store.commit("saveCurrentCommunityId", {
+            communityId: response.data[0].communityId,
+          });
+          this.$store.commit("saveCurrentCommunity", {
+            currentCommunity: response.data[0],
+          });
+          localStorage.setItem("communityData", JSON.stringify(response.data));
+          localStorage.setItem(
+            "currentCommunity",
+            JSON.stringify(response.data[0])
+          );
+          localStorage.setItem("communityId", response.data[0].communityId);
           this.$router.push({ path: "/listing" });
         })
         .catch(function (error) {
