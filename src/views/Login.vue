@@ -40,8 +40,8 @@ import Input from "@/components/Input.vue";
 import Button from "@/components/Button.vue";
 import { validationMixin } from "vuelidate";
 import { required, minLength, email } from "vuelidate/lib/validators";
-import axios from "axios";
 import { BASE_URL } from "@/assets/urls/config";
+import request from "../services/requests";
 
 export default {
   mixins: [validationMixin],
@@ -85,59 +85,50 @@ export default {
         return;
       }
     },
-    login: function () {
+    login: async function () {
       this.handleSubmit();
       let email = this.email;
       let password = this.password;
-      axios
-        .post(`${BASE_URL}/login`, {
+      try {
+        const response = await request.post(`${BASE_URL}/login`, {
           email,
           password,
-        })
-        .then((response) => {
-          this.$store.commit("saveToken", {
-            token: response.data.token,
-          });
-          this.$store.commit("saveUser", {
-            user: response.data.user,
-          });
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("user", JSON.stringify(response.data.user));
-          this.getCommunities();
-        })
-        .catch(function (error) {
-          console.log(error);
         });
+        this.$store.commit("saveToken", {
+          token: response.data.token,
+        });
+        this.$store.commit("saveUser", {
+          user: response.data.user,
+        });
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        this.getCommunities();
+      } catch (e) {
+        console.log(e);
+      }
     },
-    getCommunities() {
-      const token = localStorage.getItem("token");
-      axios
-        .get(`${BASE_URL}/communities`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          this.$store.commit("saveCommunityData", {
-            communityData: response.data,
-          });
-          this.$store.commit("saveCurrentCommunityId", {
-            communityId: response.data[0].communityId,
-          });
-          this.$store.commit("saveCurrentCommunity", {
-            currentCommunity: response.data[0],
-          });
-          localStorage.setItem("communityData", JSON.stringify(response.data));
-          localStorage.setItem(
-            "currentCommunity",
-            JSON.stringify(response.data[0])
-          );
-          localStorage.setItem("communityId", response.data[0].communityId);
-          this.$router.push({ path: "/listing" });
-        })
-        .catch(function (error) {
-          console.log(error);
+    getCommunities: async function () {
+      try {
+        const response = await request.get(`${BASE_URL}/communities`);
+        this.$store.commit("saveCommunityData", {
+          communityData: response.data,
         });
+        this.$store.commit("saveCurrentCommunityId", {
+          communityId: response.data[0].communityId,
+        });
+        this.$store.commit("saveCurrentCommunity", {
+          currentCommunity: response.data[0],
+        });
+        localStorage.setItem("communityData", JSON.stringify(response.data));
+        localStorage.setItem(
+          "currentCommunity",
+          JSON.stringify(response.data[0])
+        );
+        localStorage.setItem("communityId", response.data[0].communityId);
+        this.$router.push({ path: "/listing" });
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };

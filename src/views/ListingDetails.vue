@@ -61,7 +61,7 @@
 import Header from "../components/Header.vue";
 import Sidebar from "../components/Sidebar.vue";
 import { BASE_URL } from "@/assets/urls/config";
-import axios from "axios";
+import request from "../services/requests";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
@@ -81,15 +81,15 @@ export default {
     parseDay(date) {
       return dayjs().to(dayjs(date));
     },
-    getListingDetails() {
-      axios
-        .get(`${BASE_URL}/listing/` + this.$route.params.post_id)
-        .then((response) => {
-          this.listingDetails = response.data;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+    getListingDetails: async function () {
+      try {
+        const response = await request.get(
+          `${BASE_URL}/listing/` + this.$route.params.post_id
+        );
+        this.listingDetails = response.data;
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
   mounted: function () {

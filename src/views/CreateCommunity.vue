@@ -111,7 +111,7 @@
 
 <script>
 import { BASE_URL } from "@/assets/urls/config";
-import axios from "axios";
+import request from "../services/requests";
 import Input from "@/components/Input.vue";
 import Button from "@/components/Button.vue";
 import { validationMixin } from "vuelidate";
@@ -163,46 +163,32 @@ export default {
       copy(this.inviteUrl);
       this.isCopy = true;
     },
-    createCommunity() {
+    createCommunity: async function () {
       this.handleSubmit();
-      const token = localStorage.getItem("token");
       const fd = new FormData();
       fd.append("file", this.file, this.file.name);
       fd.append("name", this.name);
-      axios
-        .post(`${BASE_URL}/create-community`, fd, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          this.isStep1 = false;
-          const slug = res.data.communitySlug;
-          const user = this.$store.getters.getUser;
-          const { username } = user;
-          this.inviteUrl = `${window.location.origin}/community/invite?slug=${slug}&inviter=${username}`;
-          this.getCommunities();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      try {
+        const response = await request.post(`${BASE_URL}/create-community`, fd);
+        this.isStep1 = false;
+        const slug = response.data.communitySlug;
+        const user = this.$store.getters.getUser;
+        const { username } = user;
+        this.inviteUrl = `${window.location.origin}/community/invite?slug=${slug}&inviter=${username}`;
+        this.getCommunities();
+      } catch (e) {
+        console.log(e);
+      }
     },
-    getCommunities() {
-      const token = localStorage.getItem("token");
-      axios
-        .get(`${BASE_URL}/communities`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          this.$store.commit("saveCommunityData", {
-            communityData: response.data,
-          });
-        })
-        .catch(function (error) {
-          console.log(error);
+    getCommunities: async function () {
+      try {
+        const response = await request.get(`${BASE_URL}/communities`);
+        this.$store.commit("saveCommunityData", {
+          communityData: response.data,
         });
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };
