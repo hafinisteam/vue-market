@@ -70,7 +70,7 @@
 import Header from "../components/Header.vue";
 import Sidebar from "../components/Sidebar.vue";
 import { BASE_URL } from "@/assets/urls/config";
-import axios from "axios";
+import request from "../services/requests";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
@@ -117,14 +117,9 @@ export default {
         .flat();
     },
     getCommunityPost() {
-      const token = localStorage.getItem("token");
       const id = this.$store.getters.communityId;
-      axios
-        .get(`${BASE_URL}/community-listings/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+      request
+        .get(`${BASE_URL}/community-listings/${id}`)
         .then((response) => {
           this.posts = response.data;
           this.$store.commit("savePostId", {
