@@ -116,19 +116,19 @@ export default {
         })
         .flat();
     },
-    getCommunityPost() {
+    getCommunityPost: async function () {
       const id = this.$store.getters.communityId;
-      request
-        .get(`${BASE_URL}/community-listings/${id}`)
-        .then((response) => {
-          this.posts = response.data;
-          this.$store.commit("savePostId", {
-            postId: response.data.postId,
-          });
-        })
-        .catch(function (error) {
-          console.log(error);
+      try {
+        const response = await request.get(
+          `${BASE_URL}/community-listings/${id}`
+        );
+        this.posts = response.data;
+        this.$store.commit("savePostId", {
+          postId: response.data.postId,
         });
+      } catch (e) {
+        console.log(e);
+      }
     },
     handleRedirect() {
       if (this.isLoggedIn == false) {

@@ -180,17 +180,15 @@ export default {
         console.log(e);
       }
     },
-    getCommunities() {
-      request
-        .get(`${BASE_URL}/communities`)
-        .then((response) => {
-          this.$store.commit("saveCommunityData", {
-            communityData: response.data,
-          });
-        })
-        .catch(function (error) {
-          console.log(error);
+    getCommunities: async function () {
+      try {
+        const response = await request.get(`${BASE_URL}/communities`);
+        this.$store.commit("saveCommunityData", {
+          communityData: response.data,
         });
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };
