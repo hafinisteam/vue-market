@@ -64,7 +64,7 @@ import Button from "@/components/Button.vue";
 import { validationMixin } from "vuelidate";
 import { required, minLength, email } from "vuelidate/lib/validators";
 import request from "../services/requests";
-import { BASE_URL } from "@/assets/urls/config";
+import { BASE_URL, ROUTES } from "../urls/config";
 export default {
   mixins: [validationMixin],
   data() {
@@ -174,7 +174,7 @@ export default {
           JSON.stringify(response.data[0])
         );
         localStorage.setItem("communityId", response.data[0].communityId);
-        this.$router.push({ path: "/listing" });
+        this.$router.push(ROUTES.LISTING);
       } catch (e) {
         console.log(e);
       }

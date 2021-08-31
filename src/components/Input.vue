@@ -47,7 +47,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .default-input {
   width: 327px;
   margin: 0 auto;

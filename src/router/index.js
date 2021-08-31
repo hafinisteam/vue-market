@@ -44,6 +44,14 @@ const routes = [
         /* webpackChunkName: "create-community" */ "../views/CreateCommunity.vue"
       ),
   },
+  {
+    path: "/sell-form",
+    name: "Sell form",
+    component: () =>
+      import(
+        /* webpackChunkName: "create-community" */ "../views/SellForm.vue"
+      ),
+  },
 ];
 
 const router = new VueRouter({
