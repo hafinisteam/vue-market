@@ -30,3 +30,18 @@
   padding-left: 18px;
   padding-right: 18px;
 }
+
+.invalid {
+  width: 100%;
+  color: #dc3545;
+  margin-top: 0.25rem;
+  font-size: 0.75em;
+  font-size: 80%;
+  text-align: left;
+}
+
+.bordered, .bordered button {
+  background: transparent !important;
+  border-width: 2px !important;
+  color: rgb(0, 0, 0) !important;
+}

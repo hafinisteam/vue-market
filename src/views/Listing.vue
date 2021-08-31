@@ -69,7 +69,7 @@
 <script>
 import Header from "../components/Header.vue";
 import Sidebar from "../components/Sidebar.vue";
-import { BASE_URL } from "@/assets/urls/config";
+import { BASE_URL } from "../urls/config";
 import request from "../services/requests";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";

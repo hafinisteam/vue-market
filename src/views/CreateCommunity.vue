@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import { BASE_URL } from "@/assets/urls/config";
+import { BASE_URL } from "../urls/config";
 import request from "../services/requests";
 import Input from "@/components/Input.vue";
 import Button from "@/components/Button.vue";

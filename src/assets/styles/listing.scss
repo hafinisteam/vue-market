@@ -1,5 +1,6 @@
 #listing,
-#listing-details {
+#listing-details,
+#sell-page {
   padding: 10px 24px;
   width: 100%;
   top: 0px;
@@ -220,5 +221,12 @@
 #listing-details {
   .info-wrapper {
     margin-left: 0;
+  }
+}
+
+#sell-page {
+  .logo {
+    font-size: 20px;
+    font-weight: 800;
   }
 }

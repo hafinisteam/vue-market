@@ -74,7 +74,7 @@ export default {
       this.timeout = setTimeout(() => {
         this.clearTimeout();
         callback();
-      }, 3000);
+      }, 5000);
     },
     onClick() {
       this.$emit("onclick");

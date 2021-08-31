@@ -1,9 +1,14 @@
 <template>
   <div class="header-inner w-100 d-flex align-items-center justify-content-end">
     <div class="logo">
-      <router-link to="/listing">
-        <img src="../assets/bazaar_logo.svg" alt="" />
-      </router-link>
+      <div v-if="defaultLogo === true" class="">
+        <router-link to="/listing">
+          <img src="../assets/bazaar_logo.svg" alt="" />
+        </router-link>
+      </div>
+      <div v-else>
+        {{ title }}
+      </div>
     </div>
     <div class="user-area">
       <span class="squad-icon fs-12" v-b-toggle.communities-sidebar>
@@ -32,7 +37,9 @@
           />
         </svg>
       </span>
-      <div class="btn-sell">Sell</div>
+      <div class="btn-sell">
+        <router-link to="/sell-form">Sell</router-link>
+      </div>
       <b-dropdown class="dropdown-btn">
         <template #button-content>
           <img src="../assets/icon_user.svg" class="user-avatar" alt="" />
@@ -50,6 +57,15 @@
 
 <script>
 export default {
+  props: {
+    defaultLogo: {
+      type: Boolean,
+      default: true,
+    },
+    title: {
+      type: String,
+    },
+  },
   methods: {
     logout: function () {
       this.$store.commit("logOut");
@@ -126,9 +142,12 @@ export default {
   }
 }
 .btn-sell {
-  font-weight: 800;
-  font-size: 16px;
-  color: rgb(103, 78, 255);
-  cursor: pointer;
+  a {
+    font-weight: 800;
+    font-size: 16px;
+    color: rgb(103, 78, 255);
+    cursor: pointer;
+    text-decoration: none;
+  }
 }
 </style>
